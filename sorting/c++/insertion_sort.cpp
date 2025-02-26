@@ -5,11 +5,10 @@
 #include <iostream>
 using namespace std;
 
-void bubble_sort(int*, int);
-
-//helper functions
-void swap(int*, int*);
+//function declarations
+void insertion_sort(int*, int);
 void print_array(int*, int);
+
 
 int main() {
     int n;
@@ -23,14 +22,14 @@ int main() {
     //accepting the elements of the array from the user
     for (int i = 0; i < n; i++) {
         cout << "Enter element " << i+1 << ": ";
-        cin >> *(a+i);
+        cin >> a[i];
     }
-    printf("\n");
+    cout << "\n";
 
     cout << "The original array: ";
     print_array(a, n);
     
-    bubble_sort(a, n);
+    insertion_sort(a, n);
 
     cout << "The sorted array: ";
     print_array(a, n);
@@ -38,23 +37,8 @@ int main() {
     return 0;
 }
 
-//swaps the values of two variables
-void swap(int* a, int* b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-//prints the elements of the input array in terminal
-void print_array(int arr[], int n) {
-    for (int i = 0; i < n; i++) {
-            cout << arr[i] << " ";
-    }
-    cout << endl;
-}
-
-//sorts the input array of length n using the bubble sorting method
-void bubble_sort(int arr[], int n) {
+//sorts the input array of length n using the insertion sorting method
+void insertion_sort(int arr[], int n) {
     /*
         Parameters:
             array to be sorted
@@ -65,15 +49,26 @@ void bubble_sort(int arr[], int n) {
 
         Effect:
             arr is sorted in place in ascending order of the integers
-
-        Time Complexity = O(n^2)
     */
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (arr[i] < arr[j]) {
-                swap(arr+i, arr+j);
-            }
+
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i-1;
+
+        while(j >= 0 && arr[j] > key) {
+            arr[j+1] = arr[j];
+            j = j-1;
         }
+        arr[j+1] = key;
+
     }
+}
+
+//prints the elements of the input array in terminal
+void print_array(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+            cout << arr[i] << " ";
+    }
+    cout << endl;
 }
